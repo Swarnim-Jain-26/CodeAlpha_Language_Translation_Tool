@@ -47,6 +47,4 @@ This project was developed as part of my AI Internship program to gain practical
 ## Author
 Swarnim Jain
 CodeAlpha Intern
-
-Swarnim Jain
 AI Internship Project
