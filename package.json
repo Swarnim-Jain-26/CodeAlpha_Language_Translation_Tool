@@ -1,0 +1,12 @@
+{
+  "name": "lingua-wave-translator",
+  "version": "1.0.0",
+  "description": "Premium interactive language translator app with Glassmorphism UI",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

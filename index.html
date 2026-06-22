@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinguaWave | Premium Interactive Language Translator</title>
+  <!-- Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- CSS Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- Background Glow Effects -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Main Container -->
+  <main class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo">
+          <i class="fa-solid fa-wand-magic-sparkles logo-icon"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Lingua<span>Wave</span></h1>
+          <p>Real-time AI Translation Hub</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="theme-toggle" class="icon-btn header-btn" title="Toggle Dark/Light Mode">
+          <i class="fa-solid fa-sun"></i>
+        </button>
+        <button id="history-toggle" class="icon-btn header-btn" title="View Translation History">
+          <i class="fa-solid fa-history"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Translator Grid -->
+    <section class="translator-section">
+      <div class="glass-card translator-card">
+        
+        <!-- Left Side: Source Language Panel -->
+        <div class="pane source-pane">
+          <div class="pane-header">
+            <span class="pane-label">From</span>
+            <!-- Custom Searchable Dropdown -->
+            <div class="custom-dropdown" id="source-dropdown-wrapper">
+              <button class="dropdown-trigger" id="source-dropdown-btn">
+                <span class="selected-flag"><i class="fa-solid fa-earth-americas"></i></span>
+                <span class="selected-text" id="source-lang-name">Detect Language</span>
+                <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+              </button>
+              <div class="dropdown-menu" id="source-dropdown-menu">
+                <div class="dropdown-search">
+                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                  <input type="text" placeholder="Search languages..." class="lang-search-input" id="source-lang-search">
+                </div>
+                <ul class="lang-list" id="source-lang-list">
+                  <!-- JS populated -->
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-area-container">
+            <textarea id="source-text" placeholder="Type or paste text to translate... (e.g. Hello, how are you?)" maxlength="5000"></textarea>
+            <button id="clear-btn" class="clear-text-btn" title="Clear text">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <!-- STT Visualizer Overlay (hidden by default) -->
+            <div class="speech-overlay" id="speech-overlay">
+              <div class="speech-waves">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <p>Listening... speak now</p>
+            </div>
+          </div>
+
+          <div class="pane-footer">
+            <div class="footer-actions">
+              <button id="voice-input-btn" class="action-icon-btn" title="Voice Input (Speech-to-Text)">
+                <i class="fa-solid fa-microphone"></i>
+              </button>
+              <button id="source-speak-btn" class="action-icon-btn" title="Listen (Text-to-Speech)">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+              <button id="source-copy-btn" class="action-icon-btn" title="Copy to Clipboard">
+                <i class="fa-solid fa-copy"></i>
+              </button>
+            </div>
+            <div class="char-counter">
+              <span id="char-count">0</span>/5000
+            </div>
+          </div>
+        </div>
+
+        <!-- Middle: Swap Button -->
+        <div class="middle-divider">
+          <button id="swap-btn" class="swap-languages-btn" title="Swap languages">
+            <i class="fa-solid fa-arrows-rotate swap-icon"></i>
+          </button>
+        </div>
+
+        <!-- Right Side: Target Language Panel -->
+        <div class="pane target-pane">
+          <div class="pane-header">
+            <span class="pane-label">To</span>
+            <!-- Custom Searchable Dropdown -->
+            <div class="custom-dropdown" id="target-dropdown-wrapper">
+              <button class="dropdown-trigger" id="target-dropdown-btn">
+                <span class="selected-flag"><i class="fa-solid fa-language"></i></span>
+                <span class="selected-text" id="target-lang-name">Spanish</span>
+                <i class="fa-solid fa-chevron-down dropdown-arrow"></i>
+              </button>
+              <div class="dropdown-menu" id="target-dropdown-menu">
+                <div class="dropdown-search">
+                  <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                  <input type="text" placeholder="Search languages..." class="lang-search-input" id="target-lang-search">
+                </div>
+                <ul class="lang-list" id="target-lang-list">
+                  <!-- JS populated -->
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-area-container readonly-container">
+            <div class="translation-loader" id="translation-loader">
+              <div class="spinner-wave">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+            <textarea id="target-text" placeholder="Translation will appear here..." readonly></textarea>
+          </div>
+
+          <div class="pane-footer">
+            <div class="footer-actions">
+              <button id="target-speak-btn" class="action-icon-btn" title="Listen (Text-to-Speech)">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+              <button id="target-copy-btn" class="action-icon-btn" title="Copy to Clipboard">
+                <i class="fa-solid fa-copy"></i>
+              </button>
+              
+              <!-- Custom Speech Configuration Toggle -->
+              <div class="speech-settings-dropdown">
+                <button id="speech-settings-btn" class="action-icon-btn" title="Voice Settings">
+                  <i class="fa-solid fa-sliders"></i>
+                </button>
+                <div class="speech-settings-panel" id="speech-settings-panel">
+                  <h4>Voice Settings</h4>
+                  <div class="setting-item">
+                    <label for="voice-select">Voice</label>
+                    <select id="voice-select">
+                      <!-- Populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="setting-item">
+                    <label for="voice-speed">Speed (<span id="speed-val">1.0</span>x)</label>
+                    <input type="range" id="voice-speed" min="0.5" max="2.0" step="0.1" value="1.0">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="translation-engine"><i class="fa-solid fa-bolt"></i> Google Cloud</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Action Panel Under Translator Card -->
+      <div class="translator-actions-bar">
+        <div class="auto-translate-wrapper">
+          <label class="switch">
+            <input type="checkbox" id="auto-translate-toggle" checked>
+            <span class="slider round"></span>
+          </label>
+          <span class="switch-label">Instant Auto-Translate</span>
+        </div>
+
+        <button id="translate-btn" class="primary-btn">
+          <span>Translate Now</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- History Drawer (Sidebar) -->
+    <aside class="history-drawer" id="history-drawer">
+      <div class="drawer-header">
+        <h3><i class="fa-solid fa-history"></i> Translation History</h3>
+        <button id="close-history" class="icon-btn close-drawer-btn">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="drawer-content">
+        <div class="history-actions">
+          <button id="clear-all-history" class="text-danger-btn">
+            <i class="fa-solid fa-trash-can"></i> Clear All History
+          </button>
+        </div>
+        <ul class="history-list" id="history-items-container">
+          <!-- Populated by JS -->
+          <li class="empty-history-msg">No translation history yet.</li>
+        </ul>
+      </div>
+    </aside>
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+
+    <!-- Notification Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+  </main>
+
+  <!-- JS Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
